@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictokclone/constants/gaps.dart';
 import 'package:tictokclone/constants/sizes.dart';
+import 'package:tictokclone/features/authentication/widgets/auth_button.dart';
+import 'package:tictokclone/features/authentication/widgets/login_form_screen.dart';
 
 class LogInScreen extends StatelessWidget {
   const LogInScreen({super.key});
 
   void onSignUpTap(BuildContext context) {
     Navigator.of(context).pop();
+  }
+
+  void _onEmailLoginTap(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const LoginFormScreen(),
+      ),
+    );
   }
 
   @override
@@ -16,17 +27,17 @@ class LogInScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
-            children: const [
+            children: [
               Gaps.v80,
-              Text(
+              const Text(
                 'Log in to TikTok',
                 style: TextStyle(
                   fontSize: Sizes.size24,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               Gaps.v20,
-              Text(
+              const Text(
                 'Manage your account,check notifications,comment on videos, and more.',
                 style: TextStyle(
                   fontSize: Sizes.size16,
@@ -35,12 +46,24 @@ class LogInScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               Gaps.v40,
+              GestureDetector(
+                onTap: () => _onEmailLoginTap(context),
+                child: const AuthButton(
+                  icon: FaIcon(FontAwesomeIcons.user),
+                  text: "Use email & password",
+                ),
+              ),
+              Gaps.v16,
+              const AuthButton(
+                icon: FaIcon(FontAwesomeIcons.apple),
+                text: "Continue with Apple",
+              ),
             ],
           ),
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.grey.shade100,
+        color: Colors.grey.shade50,
         elevation: 4,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: Sizes.size32),
