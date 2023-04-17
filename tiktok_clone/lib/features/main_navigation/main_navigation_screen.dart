@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MainNavigationScreen extends StatefulWidget {
@@ -37,50 +37,20 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: screens[_selectIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: _onTap,
-        currentIndex: _selectIndex,
-        selectedItemColor: Theme.of(context).primaryColor,
-        items: const [
-          BottomNavigationBarItem(
-              backgroundColor: Colors.amber,
-              icon: FaIcon(
-                FontAwesomeIcons.house,
-              ),
-              label: "home",
-              tooltip: "what are you"),
-          BottomNavigationBarItem(
-              backgroundColor: Colors.blue,
-              icon: FaIcon(
-                FontAwesomeIcons.magnifyingGlass,
-              ),
-              label: "Search",
-              tooltip: "what are you"),
-          BottomNavigationBarItem(
-              backgroundColor: Colors.pink,
-              icon: FaIcon(
-                FontAwesomeIcons.house,
-              ),
-              label: "home",
-              tooltip: "what are you"),
-          BottomNavigationBarItem(
-              backgroundColor: Colors.yellow,
-              icon: FaIcon(
-                FontAwesomeIcons.house,
-              ),
-              label: "home",
-              tooltip: "what are you"),
-          BottomNavigationBarItem(
-              backgroundColor: Colors.teal,
-              icon: FaIcon(
-                FontAwesomeIcons.house,
-              ),
-              label: "home",
-              tooltip: "what are you"),
-        ],
-      ),
+    return CupertinoTabScaffold(
+      tabBar: CupertinoTabBar(items: const [
+        BottomNavigationBarItem(
+            icon: FaIcon(
+              CupertinoIcons.house,
+            ),
+            label: "Home"),
+        BottomNavigationBarItem(
+            icon: FaIcon(
+              CupertinoIcons.search,
+            ),
+            label: "search")
+      ]),
+      tabBuilder: (context, index) => screens[index],
     );
   }
 }
