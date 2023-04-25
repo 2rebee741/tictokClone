@@ -30,6 +30,7 @@ class TicTokApp extends StatelessWidget {
       // home: const SignUpScreen(),
       // home: const InterestsScreen(),
       home: const MainNavigationScreen(),
+      // home: const DiscoverScreen(),
     );
   }
 }
