@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tictokclone/constants/breakpoints.dart';
 import 'package:tictokclone/constants/gaps.dart';
 import 'package:tictokclone/constants/sizes.dart';
 
@@ -41,16 +42,26 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    print(MediaQuery.of(context).size.width);
+    // print(MediaQuery.of(context).padding);
+    // print(MediaQuery.of(context).platformBrightness);
+    // print(MediaQuery.of(context).orientation);
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 1,
-          title: CupertinoSearchTextField(
-            controller: _textEditingController,
-            onChanged: _onSearchChanged,
-            onSubmitted: _onSubmitted,
+          title: ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: Breakpoints.sm,
+            ),
+            child: CupertinoSearchTextField(
+              controller: _textEditingController,
+              onChanged: _onSearchChanged,
+              onSubmitted: _onSubmitted,
+            ),
           ),
           bottom: TabBar(
             splashFactory: NoSplash.splashFactory,
@@ -81,75 +92,80 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                   vertical: Sizes.size6,
                 ),
                 itemCount: 20,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: width > Breakpoints.lg ? 5 : 2,
                     crossAxisSpacing: Sizes.size10,
                     mainAxisSpacing: Sizes.size10,
                     childAspectRatio: 9 / 20),
-                itemBuilder: (context, index) => Column(
-                      children: [
-                        Container(
-                          clipBehavior: Clip.hardEdge,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(Sizes.size4),
-                          ),
-                          child: AspectRatio(
-                            aspectRatio: 9 / 16,
-                            child: FadeInImage.assetNetwork(
-                              fit: BoxFit.cover,
-                              placeholder: "lib/assets/images/lotto.png",
-                              image:
-                                  "https://images.unsplash.com/photo-1682348686716-9a71d77e681c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60",
+                itemBuilder: (context, index) => LayoutBuilder(
+                      builder: (context, contstraints) => Column(
+                        children: [
+                          Container(
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(Sizes.size4),
+                            ),
+                            child: AspectRatio(
+                              aspectRatio: 9 / 16,
+                              child: FadeInImage.assetNetwork(
+                                fit: BoxFit.cover,
+                                placeholder: "lib/assets/images/lotto.png",
+                                image:
+                                    "https://images.unsplash.com/photo-1682348686716-9a71d77e681c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60",
+                              ),
                             ),
                           ),
-                        ),
-                        Gaps.v10,
-                        const Text(
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          "This is very long paction for my tiktok that im upload just now",
-                          style: TextStyle(
-                            fontSize: Sizes.size16,
-                            fontWeight: FontWeight.bold,
+                          Gaps.v10,
+                          Text("${contstraints.maxWidth}"),
+                          const Text(
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            "This is very long paction for my tiktok that im upload just now",
+                            style: TextStyle(
+                              fontSize: Sizes.size16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        Gaps.v5,
-                        DefaultTextStyle(
-                          style: TextStyle(
-                            color: Colors.grey.shade600,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const CircleAvatar(
-                                radius: 12,
-                                backgroundImage: NetworkImage(
-                                  "https://plus.unsplash.com/premium_photo-1664699099191-f67e1f4aef40?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60",
-                                ),
-                              ),
-                              Gaps.h4,
-                              const Expanded(
-                                child: Text(
-                                  "My aVartar is goinh to ne over lojng",
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              Gaps.h4,
-                              FaIcon(
-                                FontAwesomeIcons.heart,
-                                size: Sizes.size16,
+                          Gaps.v5,
+                          if (contstraints.maxWidth < 200 ||
+                              contstraints.maxWidth > 250)
+                            DefaultTextStyle(
+                              style: TextStyle(
                                 color: Colors.grey.shade600,
+                                fontWeight: FontWeight.w600,
                               ),
-                              Gaps.h2,
-                              const Text(
-                                "2.4K",
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const CircleAvatar(
+                                    radius: 12,
+                                    backgroundImage: NetworkImage(
+                                      "https://plus.unsplash.com/premium_photo-1664699099191-f67e1f4aef40?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60",
+                                    ),
+                                  ),
+                                  Gaps.h4,
+                                  const Expanded(
+                                    child: Text(
+                                      "My aVartar is goinh to ne over lojng",
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  Gaps.h4,
+                                  FaIcon(
+                                    FontAwesomeIcons.heart,
+                                    size: Sizes.size16,
+                                    color: Colors.grey.shade600,
+                                  ),
+                                  Gaps.h2,
+                                  const Text(
+                                    "2.4K",
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
-                      ],
+                            ),
+                        ],
+                      ),
                     )
                 // Image.asset("lib/assets/images/lotto.png"),
 

@@ -4,8 +4,10 @@ import 'package:tictokclone/constants/gaps.dart';
 import 'package:tictokclone/constants/sizes.dart';
 import 'package:tictokclone/features/authentication/widgets/auth_button.dart';
 import 'package:tictokclone/features/authentication/widgets/login_form_screen.dart';
+import 'package:tictokclone/utils.dart';
 
 class LogInScreen extends StatelessWidget {
+  static String routeName = "/Login";
   const LogInScreen({super.key});
 
   void onSignUpTap(BuildContext context) {
@@ -33,17 +35,19 @@ class LogInScreen extends StatelessWidget {
                 'Log in to TikTok',
                 style: TextStyle(
                   fontSize: Sizes.size24,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
               Gaps.v20,
-              const Text(
-                'Manage your account,check notifications,comment on videos, and more.',
-                style: TextStyle(
-                  fontSize: Sizes.size16,
-                  color: Colors.black45,
+              const Opacity(
+                opacity: 0.6,
+                child: Text(
+                  'Manage your account,check notifications,comment on videos, and more.',
+                  style: TextStyle(
+                    fontSize: Sizes.size16,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
               ),
               Gaps.v40,
               GestureDetector(
@@ -63,7 +67,7 @@ class LogInScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.grey.shade50,
+        color: isDarkMode(context) ? null : Colors.grey.shade50,
         elevation: 4,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: Sizes.size32),
