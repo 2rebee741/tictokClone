@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tictokclone/constants/gaps.dart';
 import 'package:tictokclone/constants/sizes.dart';
 import 'package:tictokclone/features/authentication/widgets/auth_button.dart';
@@ -7,11 +8,13 @@ import 'package:tictokclone/features/authentication/widgets/login_form_screen.da
 import 'package:tictokclone/utils.dart';
 
 class LogInScreen extends StatelessWidget {
-  static String routeName = "/Login";
+  static String routeName = "login";
+  static String routeURL = "login";
   const LogInScreen({super.key});
 
-  void onSignUpTap(BuildContext context) {
-    Navigator.of(context).pop();
+  void _onSignUpTap(BuildContext context) {
+    // Navigator.of(context).pop();
+    context.pop();
   }
 
   void _onEmailLoginTap(BuildContext context) {
@@ -77,7 +80,7 @@ class LogInScreen extends StatelessWidget {
               const Text("Don't have an account? "),
               Gaps.v20,
               GestureDetector(
-                onTap: () => onSignUpTap(context),
+                onTap: () => _onSignUpTap(context),
                 child: Text(
                   "Sign up",
                   style: TextStyle(

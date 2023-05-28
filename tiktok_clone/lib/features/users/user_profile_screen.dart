@@ -5,7 +5,13 @@ import 'package:tictokclone/constants/sizes.dart';
 import 'package:tictokclone/features/settings/settings_screen.dart';
 
 class UserProfileScreen extends StatefulWidget {
-  const UserProfileScreen({super.key});
+  final String username;
+  final String tab;
+  const UserProfileScreen({
+    super.key,
+    required this.username,
+    required this.tab,
+  });
 
   @override
   State<UserProfileScreen> createState() => _UserProfileScreenState();
@@ -23,12 +29,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
+      initialIndex: widget.tab == "likes" ? 1 : 0,
       length: 2,
       child: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return [
             SliverAppBar(
-              title: const Text("Profile_FA"),
+              title: Text(widget.username),
               actions: [
                 IconButton(
                   onPressed: _onGearPressed,
@@ -47,20 +54,21 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     foregroundColor: Colors.amber,
                     foregroundImage: NetworkImage(
                         "https://images.unsplash.com/photo-1682847724222-207d5e8e0b97?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60"),
+                    child: Text("니꼬"),
                   ),
                   Gaps.v20,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Text(
-                        "@username",
-                        style: TextStyle(
+                        "@${widget.username}",
+                        style: const TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: Sizes.size18,
                         ),
                       ),
                       Gaps.h5,
-                      FaIcon(
+                      const FaIcon(
                         FontAwesomeIcons.solidCircleCheck,
                         size: Sizes.size16,
                         color: Colors.blue,

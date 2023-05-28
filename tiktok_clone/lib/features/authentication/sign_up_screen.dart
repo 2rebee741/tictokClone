@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tictokclone/constants/gaps.dart';
 import 'package:tictokclone/constants/sizes.dart';
 import 'package:tictokclone/features/authentication/login_screen.dart';
@@ -9,44 +10,16 @@ import 'package:tictokclone/features/authentication/widgets/username_screen.dart
 import '../../utils.dart';
 
 class SignUpScreen extends StatelessWidget {
-  static String routeName = "/";
+  static String routeURL = "/";
+  static String routeName = "signUp";
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) async {
-/*     final result = await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const LogInScreen(),
-      ),
-    );
-    print("iser"); */
-    final result = await Navigator.of(context).pushNamed(LogInScreen.routeName);
+    context.push(LogInScreen.routeName);
   }
 
   void _onEmailTap(BuildContext context) {
-    /*   Navigator.of(context).push(
-      PageRouteBuilder(
-          transitionDuration: const Duration(seconds: 1),
-          reverseTransitionDuration: const Duration(seconds: 1),
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const UsernameScreen(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            final offsetAnimation =
-                Tween(begin: const Offset(0, -1), end: Offset.zero)
-                    .animate(animation);
-            final opacityAnimation = Tween(
-              begin: 0.5,
-              end: 0.8,
-            ).animate(animation);
-            return SlideTransition(
-              position: offsetAnimation,
-              child: FadeTransition(
-                opacity: animation,
-                child: child,
-              ),
-            );
-          }),
-    ); */
-    Navigator.of(context).pushNamed(UsernameScreen.routeName);
+    context.pushNamed(UsernameScreen.routeName);
   }
 
   @override

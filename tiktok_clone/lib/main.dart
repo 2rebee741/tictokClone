@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tictokclone/constants/sizes.dart';
-import 'package:tictokclone/features/authentication/login_screen.dart';
-import 'package:tictokclone/features/authentication/sign_up_screen.dart';
-import 'package:tictokclone/features/authentication/widgets/email_screen.dart';
-import 'package:tictokclone/features/authentication/widgets/username_screen.dart';
+import 'package:tictokclone/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); //앱고정
@@ -22,7 +19,8 @@ class TicTokApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       debugShowCheckedModeBanner: false,
       title: 'TikTok Clone App',
       themeMode: ThemeMode.system,
@@ -59,17 +57,6 @@ class TicTokApp extends StatelessWidget {
         ),
         primaryColor: const Color(0xffe9435A),
       ),
-      initialRoute: SignUpScreen.routeName,
-      routes: {
-        SignUpScreen.routeName: (context) => const SignUpScreen(),
-        UsernameScreen.routeName: (context) => const UsernameScreen(),
-        LogInScreen.routeName: (context) => const LogInScreen(),
-        EmailScreen.routeName: (context) => const EmailScreen(),
-      },
-      // home: const SignUpScreen(),
-      // home: const InterestsScreen(),
-      // home: const MainNavigationScreen(),
-      // home: const DiscoverScreen(),
     );
   }
 }
