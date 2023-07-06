@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tictokclone/constants/sizes.dart';
 import 'package:tictokclone/features/inbox/chat_detail_screen.dart';
 
 class ChatsScreen extends StatefulWidget {
+  static const String routeName = "chats";
+  static const String routeURL = "/chats";
   const ChatsScreen({super.key});
 
   @override
@@ -43,24 +46,23 @@ class _ChatsScreenState extends State<ChatsScreen> {
     }
   }
 
-  void _onChatTap() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const ChatDetailScreen(),
-      ),
+  void _onChatTap(int index) {
+    context.pushNamed(
+      ChatDetailScreen.routeName,
+      params: {"chatID": "$index"},
     );
   }
 
   Widget _makeTile(int index) {
     return ListTile(
       onLongPress: () => _deleteItem(index),
-      onTap: _onChatTap,
+      onTap: () => _onChatTap(index),
       leading: const CircleAvatar(
         radius: 30,
         foregroundImage: NetworkImage(
             "https://images.unsplash.com/photo-1661956602116-aa6865609028?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60"),
         child: Text(
-          'SLEEK',
+          'SLEEK ',
         ),
       ),
       title: Row(
@@ -68,7 +70,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            "KEN $index",
+            "KEN ($index)",
             style: const TextStyle(
               fontWeight: FontWeight.w600,
             ),

@@ -6,6 +6,9 @@ import 'package:tictokclone/features/onboarding/widgets/interest_button.dart';
 import 'package:tictokclone/features/onboarding/widgets/tutorial_screen.dart';
 
 class InterestsScreen extends StatefulWidget {
+  static const String routeName = "interests";
+  static const String routeURL = "/tutorial";
+
   const InterestsScreen({super.key});
 
   static const interests = [

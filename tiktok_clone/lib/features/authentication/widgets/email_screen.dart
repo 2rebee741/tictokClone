@@ -11,8 +11,6 @@ class EmailScreenArgs {
 }
 
 class EmailScreen extends StatefulWidget {
-  static String routeName = "email";
-  static String routeURL = "email";
   // final String username;
   final String username;
   const EmailScreen({
@@ -93,9 +91,9 @@ class _EmailScreenState extends State<EmailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Gaps.v40,
-              const Text(
-                'What is your email?, ?',
-                style: TextStyle(
+              Text(
+                'What is your email?,$_email ?',
+                style: const TextStyle(
                   fontSize: Sizes.size24,
                   fontWeight: FontWeight.w700,
                 ),

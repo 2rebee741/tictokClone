@@ -4,7 +4,12 @@ import 'package:tictokclone/constants/gaps.dart';
 import 'package:tictokclone/constants/sizes.dart';
 
 class ChatDetailScreen extends StatefulWidget {
-  const ChatDetailScreen({super.key});
+  static const String routeName = "chatDetail";
+  static const String routeURL = ":chatID";
+
+  final String chatID;
+
+  const ChatDetailScreen({super.key, required this.chatID});
 
   @override
   State<ChatDetailScreen> createState() => _ChatDetailScreenState();

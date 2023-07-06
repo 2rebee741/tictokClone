@@ -1,46 +1,61 @@
 import 'package:go_router/go_router.dart';
+import 'package:tictokclone/common/widgets/main_navigation/main_navigation_screen.dart';
+import 'package:tictokclone/features/authentication/login_screen.dart';
 import 'package:tictokclone/features/authentication/sign_up_screen.dart';
-import 'package:tictokclone/features/authentication/widgets/email_screen.dart';
-import 'package:tictokclone/features/authentication/widgets/username_screen.dart';
-import 'package:tictokclone/features/users/user_profile_screen.dart';
+import 'package:tictokclone/features/inbox/activity_screen.dart';
+import 'package:tictokclone/features/inbox/chat_detail_screen.dart';
+import 'package:tictokclone/features/inbox/chats_screen.dart';
+import 'package:tictokclone/features/onboarding/interests_screen.dart';
 
 final router = GoRouter(
+  initialLocation: "/inbox",
   routes: [
     GoRoute(
       name: SignUpScreen.routeName,
       path: SignUpScreen.routeURL,
       builder: (context, state) => const SignUpScreen(),
-      routes: [
-        GoRoute(
-            path: UsernameScreen.routeURL,
-            name: UsernameScreen.routeName,
-            builder: (context, state) => const UsernameScreen(),
-            routes: [
-              GoRoute(
-                name: EmailScreen.routeName,
-                path: EmailScreen.routeURL,
-                builder: (context, state) {
-                  final args = state.extra as EmailScreenArgs;
-                  return EmailScreen(username: args.username);
-                },
-              ),
-            ]),
-      ],
     ),
-    // GoRoute(
-    //   path: LogInScreen.routeName,
-    //   builder: (context, state) => const LogInScreen(),
-    // ),
     GoRoute(
-      path: "/users/:username",
+      name: LogInScreen.routeName,
+      path: LogInScreen.routeURL,
+      builder: (context, state) => const LogInScreen(),
+    ),
+    GoRoute(
+      name: InterestsScreen.routeName,
+      path: InterestsScreen.routeURL,
+      builder: (context, state) => const InterestsScreen(),
+    ),
+    GoRoute(
+      path: "/:tab(home|discover|inbox|profile)",
+      name: MainNavigationScreen.routeName,
       builder: (context, state) {
-        final username = state.params['username'];
-        final tab = state.queryParams["show"];
-        return UserProfileScreen(
-          username: username!,
-          tab: tab!,
+        final tab = state.params["tab"]!;
+        return MainNavigationScreen(
+          tab: tab,
         );
       },
+    ),
+    GoRoute(
+      name: ActivityScreen.routeName,
+      path: ActivityScreen.routeURL,
+      builder: (context, state) => const ActivityScreen(),
+    ),
+    GoRoute(
+      name: ChatsScreen.routeName,
+      path: ChatsScreen.routeURL,
+      builder: (context, state) => const ChatsScreen(),
+      routes: [
+        GoRoute(
+          path: ChatDetailScreen.routeURL,
+          name: ChatDetailScreen.routeName,
+          builder: (context, state) {
+            final chatID = state.params["chatID"]!;
+            return ChatDetailScreen(
+              chatID: chatID,
+            );
+          },
+        ),
+      ],
     ),
   ],
 );

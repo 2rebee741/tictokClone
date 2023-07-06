@@ -8,8 +8,8 @@ import 'package:tictokclone/features/authentication/widgets/login_form_screen.da
 import 'package:tictokclone/utils.dart';
 
 class LogInScreen extends StatelessWidget {
-  static String routeName = "login";
-  static String routeURL = "login";
+  static String routeName = "/login";
+  static String routeURL = "/login";
   const LogInScreen({super.key});
 
   void _onSignUpTap(BuildContext context) {
@@ -18,7 +18,8 @@ class LogInScreen extends StatelessWidget {
   }
 
   void _onEmailLoginTap(BuildContext context) {
-    Navigator.of(context).push(
+    Navigator.push(
+      context,
       MaterialPageRoute(
         builder: (context) => const LoginFormScreen(),
       ),
@@ -70,7 +71,9 @@ class LogInScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: isDarkMode(context) ? null : Colors.grey.shade50,
+        color: isDarkMode(context)
+            ? Theme.of(context).appBarTheme.backgroundColor
+            : Colors.grey.shade50,
         elevation: 4,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: Sizes.size32),

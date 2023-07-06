@@ -19,7 +19,12 @@ class SignUpScreen extends StatelessWidget {
   }
 
   void _onEmailTap(BuildContext context) {
-    context.pushNamed(UsernameScreen.routeName);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const UsernameScreen(),
+      ),
+    );
   }
 
   @override
@@ -36,7 +41,7 @@ class SignUpScreen extends StatelessWidget {
                 children: [
                   Gaps.v80,
                   const Text(
-                    'Sign up for TikTok',
+                    'Sign up for TicTok',
                     style: TextStyle(
                       fontSize: Sizes.size24,
                       fontWeight: FontWeight.w700,
