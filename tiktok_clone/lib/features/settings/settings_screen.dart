@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tictokclone/common/widgets/video_configuration/video_config.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -27,16 +28,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: ListView(
         children: [
-          AnimatedBuilder(
-            animation: videoConfig,
-            builder: (context, child) => SwitchListTile.adaptive(
-              title: const Text("Mute Video"),
-              value: videoConfig.autoMute,
-              onChanged: (value) {
-                videoConfig.toggleAutoMute();
-              },
-              subtitle: const Text("Mute video"),
-            ),
+          SwitchListTile.adaptive(
+            value: context.watch<VideoConfig>().isMuted,
+            onChanged: (value) => context.read<VideoConfig>().toggleIsMuted(),
+            title: const Text("isMuted"),
+            subtitle: const Text("Mute sounds"),
           ),
           CupertinoSwitch(
               value: _notification, onChanged: _onNotificationsChanged),
