@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tictokclone/common/widgets/video_configuration/video_config.dart';
+import 'package:tictokclone/features/videos/view_models/playback_config_vm.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -29,10 +29,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: ListView(
         children: [
           SwitchListTile.adaptive(
-            value: context.watch<VideoConfig>().isMuted,
-            onChanged: (value) => context.read<VideoConfig>().toggleIsMuted(),
-            title: const Text("isMuted"),
-            subtitle: const Text("Mute sounds"),
+            value: context.watch<PlaybackConfigViewModel>().muted,
+            onChanged: (value) =>
+                context.read<PlaybackConfigViewModel>().setMuted(value),
+            title: const Text("Mute Video"),
+            subtitle: const Text("sub option"),
+          ),
+          SwitchListTile.adaptive(
+            value: context.watch<PlaybackConfigViewModel>().autoplay,
+            onChanged: (value) =>
+                context.read<PlaybackConfigViewModel>().setAutoplay(value),
+            title: const Text("autoplay Video"),
+            subtitle: const Text("sub option"),
           ),
           CupertinoSwitch(
               value: _notification, onChanged: _onNotificationsChanged),
@@ -42,15 +50,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
             onChanged: _onNotificationsChanged,
           ),
           SwitchListTile.adaptive(
-            title: const Text("enable list"),
             value: _notification,
+            title: const Text("enable list"),
             onChanged: _onNotificationsChanged,
             subtitle: const Text("sub option"),
           ),
           Checkbox(value: _notification, onChanged: _onNotificationsChanged),
           CheckboxListTile(
-            activeColor: Colors.black,
             value: _notification,
+            activeColor: Colors.black,
             onChanged: _onNotificationsChanged,
             title: const Text(
               "Enable notifications",

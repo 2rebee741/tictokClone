@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:tictokclone/common/widgets/video_configuration/video_config.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tictokclone/constants/sizes.dart';
+import 'package:tictokclone/features/videos/repos/video_playback_config_repo.dart';
+import 'package:tictokclone/features/videos/view_models/playback_config_vm.dart';
 import 'package:tictokclone/router.dart';
 
 void main() async {
@@ -13,7 +15,19 @@ void main() async {
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
 
-  runApp(const TicTokApp());
+  final preferences = await SharedPreferences.getInstance();
+  final repository = PlaybackConfigRepository(preferences);
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => PlaybackConfigViewModel(repository),
+        ),
+      ],
+      child: const TicTokApp(),
+    ),
+  );
 }
 
 class TicTokApp extends StatelessWidget {
@@ -21,50 +35,43 @@ class TicTokApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => VideoConfig(),
+    return MaterialApp.router(
+      routerConfig: router,
+      debugShowCheckedModeBanner: false,
+      title: 'TikTok Clone App',
+      themeMode: ThemeMode.system,
+      theme: ThemeData(
+        textTheme: Typography.blackMountainView,
+        brightness: Brightness.light,
+        bottomAppBarTheme: BottomAppBarTheme(
+          color: Colors.grey.shade50,
         ),
-      ],
-      child: MaterialApp.router(
-        routerConfig: router,
-        debugShowCheckedModeBanner: false,
-        title: 'TikTok Clone App',
-        themeMode: ThemeMode.system,
-        theme: ThemeData(
-          textTheme: Typography.blackMountainView,
-          brightness: Brightness.light,
-          bottomAppBarTheme: BottomAppBarTheme(
-            color: Colors.grey.shade50,
-          ),
-          scaffoldBackgroundColor: Colors.white,
-          primaryColor: const Color(0xffe9435A),
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          appBarTheme: const AppBarTheme(
-            foregroundColor: Colors.black,
-            backgroundColor: Colors.white,
-            elevation: 0,
-            titleTextStyle: TextStyle(
-              color: Colors.black,
-              fontSize: Sizes.size16 + Sizes.size2,
-              fontWeight: FontWeight.w600,
-            ),
+        scaffoldBackgroundColor: Colors.white,
+        primaryColor: const Color(0xffe9435A),
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        appBarTheme: const AppBarTheme(
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.white,
+          elevation: 0,
+          titleTextStyle: TextStyle(
+            color: Colors.black,
+            fontSize: Sizes.size16 + Sizes.size2,
+            fontWeight: FontWeight.w600,
           ),
         ),
-        darkTheme: ThemeData(
-          textTheme: Typography.whiteMountainView,
-          brightness: Brightness.dark,
-          scaffoldBackgroundColor: Colors.black,
-          appBarTheme: AppBarTheme(
-            backgroundColor: Colors.grey.shade900,
-          ),
-          bottomAppBarTheme: BottomAppBarTheme(
-            color: Colors.grey.shade900,
-          ),
-          primaryColor: const Color(0xffe9435A),
+      ),
+      darkTheme: ThemeData(
+        textTheme: Typography.whiteMountainView,
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: Colors.black,
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.grey.shade900,
         ),
+        bottomAppBarTheme: BottomAppBarTheme(
+          color: Colors.grey.shade900,
+        ),
+        primaryColor: const Color(0xffe9435A),
       ),
     );
   }
