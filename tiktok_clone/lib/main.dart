@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tictokclone/constants/sizes.dart';
 import 'package:tictokclone/features/videos/repos/video_playback_config_repo.dart';
-import 'package:tictokclone/features/videos/view_models/playback_config_vm.dart';
 import 'package:tictokclone/router.dart';
 
 void main() async {
@@ -19,13 +18,8 @@ void main() async {
   final repository = PlaybackConfigRepository(preferences);
 
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => PlaybackConfigViewModel(repository),
-        ),
-      ],
-      child: const TicTokApp(),
+    const ProviderScope(
+      child: TicTokApp(),
     ),
   );
 }
